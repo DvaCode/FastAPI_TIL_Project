@@ -28,7 +28,8 @@ class UserService:
         now = datetime.now()
         user: User = User(
             id=self.ulid.generate(),
-            profile=profile,
+            name=profile.name,
+            email=profile.email,
             password=self.crypto.encrypt(password),
             created_at=now,
             updated_at=now,
