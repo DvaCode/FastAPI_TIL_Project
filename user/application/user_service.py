@@ -15,11 +15,11 @@ class UserService:
         self.crypto = Crypto()
 
 
-    def create_user(self, profile: Profile, password: str):
+    def create_user(self, name: str, email: str, password: str):
         _user = None
 
         try:
-            _user = self.user_repo.find_by_email(profile.email)
+            _user = self.user_repo.find_by_email(email)
         except HTTPException as e:
             if e.status_code != 422:
                 raise e
@@ -28,8 +28,8 @@ class UserService:
         now = datetime.now()
         user: User = User(
             id=self.ulid.generate(),
-            name=profile.name,
-            email=profile.email,
+            name=name,
+            email=email,
             password=self.crypto.encrypt(password),
             created_at=now,
             updated_at=now,

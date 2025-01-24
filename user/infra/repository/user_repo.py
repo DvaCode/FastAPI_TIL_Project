@@ -1,11 +1,11 @@
 # user/infra/repository/user_repo.py
 from user.domain.repository.user_repo import IUserRepository
 from database import SessionLocal
-from user.domain.user import User as UserV0
+from user.domain.user import User as UserVO
 from user.infra.db_models.user import User
 
 class UserRepository(IUserRepository):
-    def save(self, user: UserV0):
+    def save(self, user: UserVO):
         new_user = User(
             id=user.id,
             profile=user.profile,
