@@ -8,7 +8,7 @@ class ProfileSchema(BaseModel):
     name: str
     email: EmailStr
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CreateUserBody(BaseModel):
     profile: ProfileSchema
