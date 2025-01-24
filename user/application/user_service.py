@@ -1,7 +1,7 @@
 # user/application/user_service.py
 from ulid import ULID
 from datetime import datetime
-from user.domain.user import User, Profile
+from user.domain.user import User
 from user.domain.repository.user_repo import IUserRepository
 from user.infra.repository.user_repo import UserRepository
 from fastapi import HTTPException

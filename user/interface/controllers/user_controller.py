@@ -1,6 +1,6 @@
 # user/interface/controllers/user_controller.py
 from fastapi import APIRouter
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from user.application.user_service import UserService
 router = APIRouter(prefix="/users")
 
