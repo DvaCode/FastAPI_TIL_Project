@@ -3,7 +3,7 @@ from ulid import ULID
 from datetime import datetime
 from user.domain.user import User, Profile
 from user.domain.repository.user_repo import IUserRepository
-from user.domain.repository.user_repo import UserRepository
+from user.infra.repository.user_repo import UserRepository
 from fastapi import HTTPException
 from utils.crypto import Crypto
 import bcrypt
