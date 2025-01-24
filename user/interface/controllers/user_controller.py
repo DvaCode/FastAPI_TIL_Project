@@ -2,16 +2,11 @@
 from fastapi import APIRouter
 from pydantic import BaseModel, EmailStr
 from user.application.user_service import UserService
+from user.domain.user import Profile
 router = APIRouter(prefix="/users")
 
-class ProfileSchema(BaseModel):
-    name: str
-    email: EmailStr
-    class Config:
-        from_attributes = True
-
 class CreateUserBody(BaseModel):
-    profile: ProfileSchema
+    profile: Profile
     password: str
 
 @router.post("", status_code=201)

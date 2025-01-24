@@ -15,18 +15,17 @@ class UserService:
         self.crypto = Crypto()
 
 
-    def create_user(self, name: str, email: str, password: str):
+    def create_user(self, profile: Profile, password: str):
         _user = None
 
         try:
-            _user = self.user_repo.find_by_email(email)
+            _user = self.user_repo.find_by_email(profile.email)
         except HTTPException as e:
             if e.status_code != 422:
                 raise e
         if _user: # 이미 가입한 유저면 상태 코드 422 일으킴
             raise HTTPException(status_code=422)
         now = datetime.now()
-        profile = Profile(name=name, email=email)
         user: User = User(
             id=self.ulid.generate(),
             profile=profile,
