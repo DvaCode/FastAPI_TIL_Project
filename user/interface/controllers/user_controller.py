@@ -1,7 +1,10 @@
 # user/interface/controllers/user_controller.py
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
+from typing import Annotated
 from user.application.user_service import UserService
+from dependency_injector.wiring import inject, Provide
+from containers import Conatiner
 router = APIRouter(prefix="/users")
 
 class CreateUserBody(BaseModel):
@@ -10,7 +13,11 @@ class CreateUserBody(BaseModel):
     password: str
 
 @router.post("", status_code=201)
-def create_user(user: CreateUserBody):
+@inject
+def create_user(
+    user: CreateUserBody,
+    user_service: UserService = Depends(Provide[Conatiner.user_service]),
+    ):
     user_service = UserService()
     created_user = user_service.create_user(
         name = user.name,
