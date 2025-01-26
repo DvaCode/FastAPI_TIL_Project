@@ -20,9 +20,39 @@ class UserService:
         self.user_repo = user_repo
         self.ulid = ULID()
         self.crypto = Crypto()
+    
+    def get_users(
+            self,
+            page: int,
+            items_per_page: int,
+            ) -> tuple[int, list[User]]:
+        users = self.user_repo.get_users(page, items_per_page)
+        return users
 
+    def update_user(
+            self,
+            user_id: str,
+            name: str | None = None,
+            password: str | None = None,
+    ):
+        user = self.user_repo.find_by_id(user_id)
+        if name:
+            user.name = name
+        if password:
+            user.password = self.crypto.encrypt(password)
+        user.updated_at = datetime.now()
 
-    def create_user(self, name: str, email: str, password: str):
+        self.user_repo.update(user)
+
+        return user
+
+    def create_user(
+            self,
+            name: str,
+            email: str,
+            password: str,
+            memo: str | None = None,
+            ):
         _user = None
 
         try:
@@ -38,6 +68,7 @@ class UserService:
             name=name,
             email=email,
             password=self.crypto.encrypt(password),
+            memo=memo,
             created_at=now,
             updated_at=now,
         )
