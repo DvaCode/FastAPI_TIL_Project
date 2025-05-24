@@ -28,6 +28,9 @@ class UserService:
             ) -> tuple[int, list[User]]:
         users = self.user_repo.get_users(page, items_per_page)
         return users
+    
+    def delete_user(self, user_id: str):
+        self.user_repo.delete(user_id)
 
     def update_user(
             self,

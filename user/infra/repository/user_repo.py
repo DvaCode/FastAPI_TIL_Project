@@ -32,6 +32,17 @@ class UserRepository(IUserRepository):
             db.commit()
         
         return user
+    
+    def delete(
+            self,
+            id: str
+    ):
+        with SessionLocal() as db:
+            user = db.query(User).filter(User.id == id).first()
+            if not user:
+                raise HTTPException(status_code=422)
+            db.delete(user)
+            db.commit()
 
     def save(self, user: UserVO):
         new_user = User(
@@ -45,7 +56,6 @@ class UserRepository(IUserRepository):
         )
         with SessionLocal() as db:
             try:
-                db = SessionLocal()
                 db.add(new_user)
                 db.commit()
             finally:
