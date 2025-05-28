@@ -7,10 +7,13 @@ from dataclasses import dataclass
 from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 from fastapi import Depends
+from config import get_settings
 
+settings = get_settings()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 SECRET_KEY = "THIS_IS_SUPER_SECRET_KEY"
 ALGORITHM = "HS256"
+SECRET_KEY = settings.jwt_secret
 
 @dataclass
 class CurrentUser:
